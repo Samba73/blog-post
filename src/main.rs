@@ -1,3 +1,7 @@
+use blog::Post;
 fn main() {
-    println!("Hello, world!");
+    let mut post = Post::new();
+    post.add_text("Hello, world!");
+
+    println!("The post was created {}", post.content)
 }
