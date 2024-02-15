@@ -1,7 +1,5 @@
+#[allow(dead_code)]
 // states: Draft, Pending Review, Published
-
-
-
 // New Post -> Draft, In `Draft state` add text to post
 // Draft with text -> Move to `Pending Review` state
 // Approve the post -> Post moved to `Published` state
@@ -9,11 +7,14 @@
 trait State {
    fn request_review(self: Box<Self>) -> Box<dyn State>;
    fn approve(self: Box<Self>) -> Box<dyn State>;
+   fn content<'a>(&self, post: &'a Post) -> &'a str {
+    ""
+   } 
 }
 
 pub struct Post {
     state: Option<Box<dyn State>>,
-    pub content: String,
+    content: String,
 }
 
 impl Post {
@@ -41,9 +42,9 @@ impl Post {
             self.state = Some(s.approve());
         }
     }
-    // fn content(&mut self) -> &str {
-    //     self.state.as_ref().unwrap().content(self)
-    // }
+    pub fn content(&mut self) -> &str {
+        self.state.as_ref().unwrap().content(self)
+    }
     
 }
 struct Draft {
@@ -56,6 +57,7 @@ impl State for Draft {
     fn approve(self: Box<Self>) -> Box<dyn State>{
         self
     }
+
 }
 
 struct PendingReview {
@@ -68,6 +70,7 @@ impl State for PendingReview {
     fn approve(self: Box<Self>) -> Box<dyn State> {
         Box::new(Published{})
     }
+
  }
 
  struct Published {
@@ -80,5 +83,8 @@ impl State for Published {
     }
     fn approve(self: Box<Self>) -> Box<dyn State> {
         self
+    }
+    fn content<'a>(&self, post: &'a Post) -> &'a str {
+        &post.content
     }
 }
