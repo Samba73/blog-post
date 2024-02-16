@@ -1,4 +1,5 @@
 #[allow(dead_code)]
+#[allow(unused)]
 // states: Draft, Pending Review, Published
 // New Post -> Draft, In `Draft state` add text to post
 // Draft with text -> Move to `Pending Review` state
