@@ -12,7 +12,7 @@
 //     ""
 //    } 
 // }
-
+#[derive(Debug)]
 pub struct Post {
     content: String,
 }
@@ -32,7 +32,7 @@ impl Post {
     }
     
 }
-
+#[derive(Debug)]
 pub struct DraftPost {
     content: String,
 }
@@ -47,7 +47,7 @@ impl DraftPost {
         }
     }
 }
-
+#[derive(Debug)]
 pub struct PendingReviewPost {
     content: String,
 }
@@ -56,6 +56,12 @@ impl PendingReviewPost {
 
     pub fn approve(self) -> Post {
         Post{
+            content: self.content,
+        }
+    }
+
+    pub fn reject(self) -> DraftPost {
+        DraftPost{
             content: self.content,
         }
     }

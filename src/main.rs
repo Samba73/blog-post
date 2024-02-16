@@ -5,9 +5,21 @@ fn main() {
 
     let post = post.request_review();
 
-    let post = post.approve();
+    println!("The initial post is {:?}", post);
 
-    println!("The post content is {}", post.content());
+    let post = post.reject();
+    println!("The post is rejected {:?}", post);
+
+    let mut new_post = Post::new();
+
+    new_post.add_text("The content is revised now for review");
+    let new_post = new_post.request_review();
+    println!("The post now is {:?}", new_post);
+
+    let new_post = new_post.approve();
+    println!("The approved post is {:?}", new_post);
+
+    println!("The final post content is {}", new_post.content());
 
 
 }
