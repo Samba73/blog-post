@@ -19,6 +19,8 @@ fn main() {
     let new_post = new_post.approve();
     println!("The approved post is {:?}", new_post);
 
+    let new_post = new_post.publish();
+
     println!("The final post content is {}", new_post.content());
 
 
